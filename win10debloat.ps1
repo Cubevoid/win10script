@@ -34,7 +34,11 @@ $tweaks = @(
 	"InstallAdobe",
 	"Install7Zip",
 	"InstallNotepadplusplus",
-	"InstallMediaPlayerClassic",
+	"InstallVLC",
+	"InstallFirefox",
+	
+	"InstallExtras",
+	"InstallGames",
 
 	### Windows Apps
 	"DebloatAll",
@@ -59,7 +63,7 @@ $tweaks = @(
 	"DisableWAPPush",               # "EnableWAPPush",
 
 	### Security Tweaks ###
-	"SetUACLow",                  # "SetUACHigh",
+	"SetUACHigh",                  # "SetUACLow",
 	# "EnableSharingMappedDrives",  # "DisableSharingMappedDrives",
 	# "DisableAdminShares",           # "EnableAdminShares",
 	"DisableSMB1",                # "EnableSMB1",
@@ -70,7 +74,7 @@ $tweaks = @(
 	"DisableNetDevicesAutoInst",  # "EnableNetDevicesAutoInst",
 	"DisableCtrldFolderAccess",	# "EnableCtrldFolderAccess",
 	# "DisableFirewall",            # "EnableFirewall",
-	"DisableDefender",            # "EnableDefender",
+	"EnableDefender",            # "DisableDefender",
 	"DisableDefenderCloud",       # "EnableDefenderCloud",
 	"EnableF8BootMenu",             # "DisableF8BootMenu",
 	#"SetDEPOptOut",                 # "SetDEPOptIn",
@@ -92,17 +96,17 @@ $tweaks = @(
 	"DisableStorageSense",        # "EnableStorageSense",
 	"DisableDefragmentation",     # "EnableDefragmentation",
 	"DisableSuperfetch",          # "EnableSuperfetch",
-	"DisableIndexing",            # "EnableIndexing",
+	"EnableIndexing",            # "DisableIndexing",
 	"SetBIOSTimeUTC",             # "SetBIOSTimeLocal",
-	"DisableHibernation",		# "EnableHibernation",          # 
+	"EnableHibernation",		# "DisableHibernation",          # 
 	"EnableSleepButton",		# "DisableSleepButton",         
 	"DisableSleepTimeout",        # "EnableSleepTimeout",
 	# "DisableFastStartup",         # "EnableFastStartup",
 
 	### UI Tweaks ###
-	"DisableActionCenter",          # "EnableActionCenter",
-	"DisableLockScreen",            # "EnableLockScreen",
-	"DisableLockScreenRS1",       # "EnableLockScreenRS1",
+	"EnableActionCenter",          # "DisableActionCenter",
+	"EnableLockScreen",            # "DisableLockScreen",
+	"EnableLockScreenRS1",       # "DisableLockScreenRS1",
 	# "HideNetworkFromLockScreen",    # "ShowNetworkOnLockScreen",
 	# "HideShutdownFromLockScreen",   # "ShowShutdownOnLockScreen",
 	"DisableStickyKeys",            # "EnableStickyKeys",
@@ -127,7 +131,7 @@ $tweaks = @(
 
 	### Explorer UI Tweaks ###
 	"ShowKnownExtensions",          # "HideKnownExtensions",
-	# "ShowHiddenFiles",              # "HideHiddenFiles",
+	"ShowHiddenFiles",              # "HideHiddenFiles",
 	"HideSyncNotifications"         # "ShowSyncNotifications",
 	# "HideRecentShortcuts",          # "ShowRecentShortcuts",
 	"SetExplorerThisPC",            # "SetExplorerQuickAccess",
@@ -143,8 +147,8 @@ $tweaks = @(
 	"HideMusicFromExplorer",      # "ShowMusicInExplorer",
 	# "HidePicturesFromThisPC",       # "ShowPicturesInThisPC",
 	# "HidePicturesFromExplorer",   # "ShowPicturesInExplorer",
-	"HideVideosFromThisPC",         # "ShowVideosInThisPC",
-	"HideVideosFromExplorer",     # "ShowVideosInExplorer",
+	"ShowVideosInThisPC",         # "HideVideosFromThisPC",
+	"ShowVideosInExplorer",     # "HideVideosFromExplorer",
 	"Hide3DObjectsFromThisPC",      # "Show3DObjectsInThisPC",
 	"Hide3DObjectsFromExplorer",  # "Show3DObjectsInExplorer",
 	# "DisableThumbnails",          # "EnableThumbnails",
@@ -156,18 +160,18 @@ $tweaks = @(
 	"UninstallMsftBloat",           # "InstallMsftBloat",
 	"UninstallThirdPartyBloat",     # "InstallThirdPartyBloat",
 	# "UninstallWindowsStore",      # "InstallWindowsStore",
-	# "DisableXboxFeatures",          # "EnableXboxFeatures",
+	"DisableXboxFeatures",          # "EnableXboxFeatures",
 	"DisableAdobeFlash",            # "EnableAdobeFlash",
 	"InstallMediaPlayer", 		# "UninstallMediaPlayer",
 	"UninstallInternetExplorer",  # "InstallInternetExplorer",
 	"UninstallWorkFolders",       # "InstallWorkFolders",
 	"InstallLinuxSubsystem",      # "UninstallLinuxSubsystem",
-	# "InstallHyperV",              # "UninstallHyperV",
+	"InstallHyperV",              # "UninstallHyperV",
 	"SetPhotoViewerAssociation",    # "UnsetPhotoViewerAssociation",
 	"AddPhotoViewerOpenWith",       # "RemovePhotoViewerOpenWith",
 	"InstallPDFPrinter",		# "UninstallPDFPrinter",
-	# "UninstallXPSPrinter",          # "InstallXPSPrinter",
-	# "RemoveFaxPrinter",             # "AddFaxPrinter",
+	"UninstallXPSPrinter",          # "InstallXPSPrinter",
+	"RemoveFaxPrinter",             # "AddFaxPrinter",
 
 	### Server Specific Tweaks ###
 	# "HideServerManagerOnLogin",   # "ShowServerManagerOnLogin",
@@ -221,9 +225,69 @@ Function InstallNotepadplusplus {
 	choco install notepadplusplus -y
 }
 
-Function InstallMediaPlayerClassic {
-	Write-Output "Installing Media Player Classic (VLC Alternative)"
-	choco install mpc-hc -y
+#### Cubevoid's Programs ####
+
+Function InstallVLC {
+	Write-Output "Installing VLC"
+	choco install vlc -y
+}
+
+Function InstallFirefox {
+	Write-Output "Installing Firefox"
+	choco install firefox -y
+}
+
+Function InstallExtras {
+	do { $myInput = (Read-Host 'Would you like to install extra programs? (Y/N)').ToLower() } while ($myInput -notin @('y','n'))
+	if ($myInput -eq 'y') {
+		Write-Output "Installing Spotify"
+		choco install spotify -y
+
+		Write-Output "Installing Visual Studio Code"
+		choco install vscode -y
+
+		Write-Output "Installing GIMP"
+		choco install gimp -y
+
+		Write-Output "Installing WinDirStat"
+		choco install windirstat -y
+
+		Write-Output "Installing qBitTorrent"
+		choco install qbittorrent -y
+
+		Write-Output "Installing Nextcloud"
+		choco install nextcloud-client -y
+
+		Write-Output "Installing Mailspring"
+		choco install mailspring -y
+
+		Write-Output "Installing IntelliJ"
+		choco install intellijidea-community -y
+
+		Write-Output "Installing Pycharm"
+		choco install pycharm-community -y
+
+		Write-Output "Installing Signal Desktop"
+		choco install signal -y
+	} else {
+		Write-Output "Skipping extra programs"
+	}	
+}
+
+Function InstallGames {
+	do { $myInput = (Read-Host 'Would you like to install some games? (Y/N)').ToLower() } while ($myInput -notin @('y','n'))
+	if ($myInput -eq 'y') {
+		Write-Output "Installing Steam"
+		choco install steam -y
+
+		Write-Output "Installing Discord"
+		choco install discord -y
+
+		Write-Output "Installing Minecraft"
+		choco install minecraft -y
+	} else {
+		Write-Output "Skipping games"
+	}
 }
 
 ##########
